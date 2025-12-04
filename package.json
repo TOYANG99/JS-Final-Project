@@ -1,0 +1,15 @@
+{
+  "name": "final-project",
+  "version": "1.0.0",
+  "description": "Food Truck Webpage",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tommy Yang + Abdoulie Drammeh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
