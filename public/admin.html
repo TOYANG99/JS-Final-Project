@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Your Favorite Taco Truck</title>
+
+    <link rel="stylesheet" href="styles/site.css" />
+    <script src="scripts/admin.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="hero">
+            <h1>Your Favorite Taco Truck</h1>
+            <p>Admin Page</p>
+        </div>
+
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/admin.html">Admin</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section">
+            <!-- Foods -->
+            <h2>Add Menu Item</h2>
+
+            <form id="menu-form">
+                <label for="menu-name">Name</label>
+                <input type="text" id="menu-name" />
+
+                <label for="menu-description">Description</label>
+                <input type="text" id="menu-description" />
+
+                <label for="menu-price">Price</label>
+                <input type="number" id="menu-price" />
+
+                <label for="menu-image">Image URL</label>
+                <input type="text" id="menu-image" />
+
+                <button type="submit">Add Menu Item</button>
+            </form>
+        </section>
+
+        <section class="section">
+            <!-- Events -->
+            <h2>Add Event</h2>
+
+            <form id="event-form">
+                <label for="event-name">Name</label>
+                <input type="text" id="event-name" />
+
+                <label for="event-location">Location</label>
+                <input type="text" id="event-location" />
+
+                <label for="event-date">Date</label>
+                <input type="text" id="event-date" />
+
+                <label for="event-time">Time</label>
+                <input type="text" id="event-time" />
+
+                <button type="submit">Add Event</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Your Favorite Taco Truck, TY &amp; AD LLC</p>
+    </footer>
+</body>
+</html>

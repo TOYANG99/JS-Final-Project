@@ -1,13 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Favorite Taco Truck</title>
-    <link rel="stylesheet" href="styles/site.css">
+    <link rel="stylesheet" href="styles/site.css" />
+    <script src="scripts/site.js" defer></script>
 </head>
 <body>
-    <h1>Your Favorite Taco Truck</h1>
-    <h2>Hi Abdoulie!</h2>
+    <header>
+        <div class="hero">
+            <h1>Your Favorite Taco Truck</h1>
+            <p>Best Tacos in the 920</p>
+        </div>
+
+        <nav class="main-nav">
+            <a href="/">Home</a>
+            <a href="/admin.html">Admin</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Menu section -->
+        <section id="menu" class="section">
+            <h2>Menu</h2>
+            <p class="section-subtitle">A few of our most popular items.</p>
+
+            <div id="menu-list" class="grid">
+                <!-- JS will insert menu items here -->
+            </div>
+        </section>
+
+        <!-- Events section -->
+        <section id="events" class="section section-alt">
+            <h2>Upcoming Events</h2>
+            <p class="section-subtitle">Find out where the truck will be.</p>
+
+            <div id="event-list" class="grid">
+                <!-- JS will insert event cards here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Your Favorite Taco Truck, TY &amp; AD LLC</p>
+    </footer>
 </body>
 </html>
