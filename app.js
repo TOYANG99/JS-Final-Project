@@ -14,5 +14,10 @@ app.get('/', (request, response) => {
 app.get('/test', (request, response) => { 
     response.send('This test route is working!')})
 
+
+// API Routes`
+app.use('/api/v1/events', require('./routes/api/v1/events'))
+app.use('/api/v1/menu', require('./routes/api/v1/menu'))
+
 app.listen(port, () => console.log(`http://localhost:${port}/`))
 

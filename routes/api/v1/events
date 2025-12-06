@@ -1,0 +1,8 @@
+const express = require('express');
+const router = express.Router();
+
+// Sample in-memory events data
+let events = [
+    { id: 1, name: 'Event One', date: '2024-07-01' },
+    { id: 2, name: 'Event Two', date: '2024-08-15' }
+];
