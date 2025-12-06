@@ -52,6 +52,7 @@ const showEventList = (events) => {
             </h3>
             <p class="event-date">${event.date}</p>
             <p class="event-location">${event.location}</p>
+            <p class="event-time">${event.time}</p>
         `
 
         eventList.appendChild(card)
