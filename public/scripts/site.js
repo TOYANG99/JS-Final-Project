@@ -66,4 +66,3 @@ const showEventList = (events) => {
     const events = await getEvents()
     showEventList(events)
 })()
-S

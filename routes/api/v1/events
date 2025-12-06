@@ -1,42 +1,45 @@
 const express = require('express');
 const router = express.Router();
+const { getCollection, ObjectId } = require('../../../dbconnect');
 
-const events = [
-    { id: 1, name: 'Event One', date: '2024-07-01', time: '18:00', location: 'Location One' },
-    { id: 2, name: 'Event Two', date: '2024-08-15', time: '19:00', location: 'Location Two' },
-    { id: 3, name: 'Event Three', date: '2024-09-30', time: '20:00', location: 'Location Three' }
-];
+let collection = null;
+
+const getEvents = async () => {
+    if (!collection) collection = await getCollection('FoodTruckAPI', 'Events');
+    return collection;
+}
+
 
 // GET /api/v1/events - Retrieve all events
-router.get('/', (req, res) => {
-    res.json(events);
+router.get('/', async (req, res) => {
+    
+    res.send(await (await getEvents()).find({}).toArray());
+    
 });
 
 
     
 // GET /api/v1/events/:id - Retrieve a specific event by ID
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     const {id} = req.params
-    const event = events.find(e => e.id === parseInt(id));
+    const collection = await getEvents();
+    const event = await collection.findOne({_id: new ObjectId(id)});
     if (event) {
-        res.json(event);
+        res.send(event);
     } else {
-        res.send({ message: 'Event not found' });
+        res.send({ error: { message: 'Event not found' } });
     }
 });
 
 // POST /api/v1/events - Create a new event
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const  {name, location, date, time}  = req.body;
-    const newEvent = {
-        id: events.length + 1,
-        name,
+    const collection = await getEvents();
+    const { acknowledged, insertedId } = await collection.insertOne({name,
         location,
         date,
-        time
-    };
-    events.push(newEvent);
-    res.send({message: 'Event created successfully', event: newEvent});
+        time});
+    res.send({ acknowledged, insertedId }); 
 });
 
 module.exports = router;
