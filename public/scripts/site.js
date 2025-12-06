@@ -27,6 +27,7 @@ const showMenuList = (menu) => {
             <h3>${item.name}</h3>
             <p>${item.description}</p>
             <p class="price">$${Number(item.price).toFixed(2)}</p>
+            <img src="${item.imageUrl}" alt="${item.name}" height="100" width="100" />
         `
 
         menuList.appendChild(card)
