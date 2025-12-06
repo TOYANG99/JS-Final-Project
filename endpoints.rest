@@ -1,0 +1,7 @@
+###
+@url = http://localhost:3000/
+@apiUrl = http://localhost:3000/api/v1/
+
+### Events Endpoint
+GET {{apiUrl}}events
+Description: Retrieve a list of all events.

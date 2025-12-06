@@ -2,3 +2,26 @@ const express = require('express');
 const router = express.Router();
 
 // Sample in-memory events data
+const menu = [
+    { id: 1, name: 'Margherita Pizza', description: 'Classic pizza with tomatoes, mozzarella, and basil.', price: 12.99, imageUrl: '/images/margherita.jpg' },
+    { id: 2, name: 'Caesar Salad', description: 'Crisp romaine lettuce with Caesar dressing, croutons, and Parmesan cheese.', price: 8.99, imageUrl: '/images/caesar.jpg' },
+    { id: 3, name: 'Spaghetti Carbonara', description: 'Pasta with eggs, cheese, pancetta, and pepper.', price: 14.99, imageUrl: '/images/carbonara.jpg' }
+];
+
+// GET /api/v1/menu - Retrieve all menu items
+router.get('/', (req, res) => {
+    res.json(menu);
+});
+
+// GET /api/v1/menu/:id - Retrieve a specific menu item by ID
+router.get('/:id', (req, res) => {
+    const {id} = req.params;
+    const menuItem = menu.find(item => item.id === parseInt(id));
+    if (menuItem) {
+        res.json(menuItem);
+    } else {
+        res.status(404).json({ message: 'Menu item not found' });
+    }
+});
+
+module.exports = router;
