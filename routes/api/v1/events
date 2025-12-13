@@ -1,45 +1,54 @@
-const express = require('express');
-const router = express.Router();
-const { getCollection, ObjectId } = require('../../../dbconnect');
+const express = require('express')
+const router = express.Router()
+const { getCollection, ObjectId } = require('../../../dbconnect')
 
-let collection = null;
+let collection = null
 
 const getEvents = async () => {
-    if (!collection) collection = await getCollection('FoodTruckAPI', 'Events');
-    return collection;
+    if (!collection) collection = await getCollection('FoodTruckAPI', 'Events')
+    return collection
 }
 
 
 // GET /api/v1/events - Retrieve all events
 router.get('/', async (req, res) => {
-    
-    res.send(await (await getEvents()).find({}).toArray());
-    
-});
+    const events = await (await getEvents()).find({}).toArray()
+    res.send(events)
+})
 
 
-    
-// GET /api/v1/events/:id - Retrieve a specific event by ID
+// GET /api/v1/events/:id - Retrieve a specific event by Mongo _id
 router.get('/:id', async (req, res) => {
-    const {id} = req.params
-    const collection = await getEvents();
-    const event = await collection.findOne({_id: new ObjectId(id)});
-    if (event) {
-        res.send(event);
-    } else {
-        res.send({ error: { message: 'Event not found' } });
+    try {
+        const { id } = req.params
+
+        const event = await (await getEvents()).findOne({ _id: new ObjectId(id) })
+
+        if (event) {
+            res.send(event)
+        } else {
+            res.status(404).send({ error: { message: 'Event not found' } })
+        }
+    } catch (err) {
+        res.status(400).send({ error: { message: 'Invalid event id' } })
     }
-});
+})
+
 
 // POST /api/v1/events - Create a new event
 router.post('/', async (req, res) => {
-    const  {name, location, date, time}  = req.body;
-    const collection = await getEvents();
-    const { acknowledged, insertedId } = await collection.insertOne({name,
+    const { name, location, date, time } = req.body
+
+    const collection = await getEvents()
+
+    const { acknowledged, insertedId } = await collection.insertOne({
+        name,
         location,
         date,
-        time});
-    res.send({ acknowledged, insertedId }); 
-});
+        time
+    })
 
-module.exports = router;
+    res.send({ acknowledged, insertedId })
+})
+
+module.exports = router

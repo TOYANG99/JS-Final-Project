@@ -1,40 +1,56 @@
-const express = require('express');
-const router = express.Router();
-const { getCollection, ObjectId } = require('../../../dbconnect');
+const express = require('express')
+const router = express.Router()
+const { getCollection, ObjectId } = require('../../../dbconnect')
 
-let collection = null;
+let collection = null
 
 const getMenu = async () => {
-    if (!collection) collection = await getCollection('FoodTruckAPI', 'Menu');
-    return collection;
+    if (!collection) collection = await getCollection('FoodTruckAPI', 'Menu')
+    return collection
 }
 
 
 // GET /api/v1/menu - Retrieve all menu items
 router.get('/', async (req, res) => {
-    res.send(await (await getMenu()).find({}).toArray());
-});
+    const menu = await (await getMenu()).find({}).toArray()
+    res.send(menu)
+})
 
-// GET /api/v1/menu/:id - Retrieve a specific menu item by ID
-router.get('/:id', (req, res) => {
-    const {id} = req.params;
-    const menu = menu.find(item => item.id === parseInt(id));
-   if (menu) {
-        res.send(menu);
-    } else {
-        res.send({ error: { message: 'Menu item not found' } });
+
+// GET /api/v1/menu/:id - Retrieve a specific menu item by Mongo _id
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+
+        // find by MongoDB _id
+        const item = await (await getMenu()).findOne({ _id: new ObjectId(id) })
+
+        if (item) {
+            res.send(item)
+        } else {
+            res.status(404).send({ error: { message: 'Menu item not found' } })
+        }
+    } catch (err) {
+        // usually means the id isn't a valid ObjectId
+        res.status(400).send({ error: { message: 'Invalid menu id' } })
     }
-});
+})
 
-// POST /api/v1/events - Create a new event
+
+// POST /api/v1/menu - Create a new menu item
 router.post('/', async (req, res) => {
-    const  {name, description, price, imageUrl}  = req.body;
-    const collection = await getMenu();
-    const { acknowledged, insertedId } = await collection.insertOne({name,
-        description,
-        price,
-        imageUrl});
-    res.send({ acknowledged, insertedId }); 
-});
+    const { name, description, price, imageUrl } = req.body
 
-module.exports = router;
+    const collection = await getMenu()
+
+    const { acknowledged, insertedId } = await collection.insertOne({
+        name,
+        description,
+        price: Number(price),
+        imageUrl
+    })
+
+    res.send({ acknowledged, insertedId })
+})
+
+module.exports = router
